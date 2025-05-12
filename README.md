@@ -1,69 +1,99 @@
-# Welcome to your Lovable project
+# Personal Portfolio - React
 
-## Project info
+A modern, responsive personal portfolio website built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/ae2997e2-b8d5-413a-9f27-3173a7c6fd98
+![Portfolio Screenshot](https://github.com/Alqama-Shahzad/Personal-Portfolio-React/raw/master/src/Assets/Screenshot_of_page.png)
 
-## How can I edit this code?
+## 🚀 Live Demo
 
-There are several ways of editing your application.
+[View Live Site](https://alqama-portfolio.netlify.app/) *(Update this URL once deployed)*
 
-**Use Lovable**
+## ✨ Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ae2997e2-b8d5-413a-9f27-3173a7c6fd98) and start prompting.
+- **Responsive Design**: Looks great on all devices
+- **Dark/Light Mode**: Toggle between dark and light themes
+- **Animated UI**: Smooth animations and transitions
+- **Project Showcase**: Highlight your best work
+- **Skills Section**: Showcase your technical abilities
+- **Experience Timeline**: Display your professional journey
+- **Contact Form**: Allow visitors to reach out
+- **Custom Cursor**: Enhanced user experience
+- **Particle Background**: Interactive and engaging visuals
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Built With
 
-**Use your preferred IDE**
+- **React** - UI library
+- **TypeScript** - Type safety and developer experience
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Component library
+- **Framer Motion** - Animations
+- **tsparticles** - Particle background effects
+- **Vite** - Build tool and development server
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 📋 Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js (v18.0.0 or higher)
+- npm or yarn
 
-Follow these steps:
+## 🔧 Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository
+   ```bash
+   git clone https://github.com/Alqama-Shahzad/Personal-Portfolio-React.git
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Navigate to the project directory
+   ```bash
+   cd Personal-Portfolio-React
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Install dependencies
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+4. Start the development server
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-**Edit a file directly in GitHub**
+5. Open [http://localhost:5173](http://localhost:5173) to view it in the browser
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📝 Customization
 
-**Use GitHub Codespaces**
+1. Update personal information in `src/data/` directory
+2. Replace images in `src/Assets/`
+3. Modify color schemes in `tailwind.config.ts`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📤 Deployment
 
-## What technologies are used for this project?
+This site can be easily deployed to Netlify, Vercel, or GitHub Pages.
 
-This project is built with .
+### Deploying to Netlify
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Push your code to GitHub
+2. Log in to Netlify
+3. Click "New site from Git"
+4. Select your repository
+5. Configure build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+6. Click "Deploy site"
 
-## How can I deploy this project?
+## 📄 License
 
-Simply open [Lovable](https://lovable.dev/projects/ae2997e2-b8d5-413a-9f27-3173a7c6fd98) and click on Share -> Publish.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## I want to use a custom domain - is that possible?
+## 🤝 Connect With Me
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+- GitHub: [Alqama-Shahzad](https://github.com/Alqama-Shahzad)
+- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
+- Email: alqamarex@example.com
+
+---
+
+⭐️ If you found this project helpful, please give it a star on GitHub! ⭐️
