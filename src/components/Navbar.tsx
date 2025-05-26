@@ -145,7 +145,7 @@ export function Navbar() {
             
             <div className="flex items-center gap-4">
               <ThemeToggle />
-              <ResumeButton text="Resume" href="/resume.pdf" />
+              <ResumeButton text="Resume" href="/Assets/MyResume-Frontend.pdf" />
             </div>
           </nav>
 
@@ -212,7 +212,7 @@ export function Navbar() {
               </li>
             ))}
             <li className="p-4 mt-4 border-t border-border/50" role="none">
-              <ResumeButton text="Resume" href="/resume.pdf" />
+              <ResumeButton text="Resume" href="/Assets/MyResume-Frontend.pdf" />
             </li>
           </ul>
         </nav>
