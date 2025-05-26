@@ -20,7 +20,7 @@ export function Footer() {
           
           <div>
             <a
-              href="https://github.com/johndoe/portfolio"
+              href="https://github.com/Alqama-Shahzad/Personal-Portfolio-React"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
