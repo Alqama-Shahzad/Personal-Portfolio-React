@@ -18,7 +18,7 @@ const socialLinks: SocialLink[] = [
   },
   {
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/alqama-shahzad-881a06185/',
+    href: 'https://www.linkedin.com/in/alqama-shahzad/',
     icon: Linkedin,
     color: 'hover:text-[#0077B5]',
   },

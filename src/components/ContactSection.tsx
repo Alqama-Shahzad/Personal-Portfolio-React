@@ -261,7 +261,7 @@ export function ContactSection() {
                   <Github size={22} aria-hidden="true" />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/alqama-shahzad-881a06185/"
+                  href="https://www.linkedin.com/in/alqama-shahzad/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 rounded-xl flex items-center justify-center bg-muted hover:bg-primary hover:text-primary-foreground text-foreground/80 transition-all duration-300"

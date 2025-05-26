@@ -91,7 +91,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🤝 Connect With Me
 
 - GitHub: [Alqama-Shahzad](https://github.com/Alqama-Shahzad)
-- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
+- LinkedIn: [Alqama Shahzad](https://www.linkedin.com/in/alqama-shahzad/)
 - Email: alqamarex@example.com
 
 ---
