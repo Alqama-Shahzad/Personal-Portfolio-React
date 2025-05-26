@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Rocket, Sparkle, Code } from "lucide-react";
-import profileImage from '../assets/picofme1.png';
+import profileImage from '../Assets/picofme1.png';
 
 export function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
