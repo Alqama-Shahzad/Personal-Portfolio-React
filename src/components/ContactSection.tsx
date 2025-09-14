@@ -36,22 +36,6 @@ export function ContactSection() {
     message: false,
   });
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Validate field on change if it's been touched
-    if (touched[name as keyof FormData]) {
-      validateField(name as keyof FormData, value);
-    }
-  }, [touched]);
-
-  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    validateField(name as keyof FormData, formData[name as keyof FormData]);
-  }, [formData]);
-
   const validateField = useCallback((name: keyof FormData, value: string) => {
     let error = "";
     
@@ -88,6 +72,22 @@ export function ContactSection() {
 
     return !error;
   }, []);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Validate field on change if it's been touched
+    if (touched[name as keyof FormData]) {
+      validateField(name as keyof FormData, value);
+    }
+  }, [touched, validateField]);
+
+  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    validateField(name as keyof FormData, formData[name as keyof FormData]);
+  }, [formData, validateField]);
 
   const validateForm = useCallback(() => {
     const newErrors: FormErrors = {};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { skills as defaultSkills } from "@/data/skills";
+import { skills as defaultSkills, type Skill } from "@/data/skills";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 import { Code } from "lucide-react";
@@ -24,11 +24,11 @@ export function SkillsSection() {
         );
         
         // Check if we have any new default skills that aren't in saved skills
-        const savedSkillNames = new Set(parsedSkills.map((skill: any) => skill.name));
+        const savedSkillNames = new Set(parsedSkills.map((skill: Skill) => skill.name));
         const newDefaultSkills = defaultSkills.filter(skill => !savedSkillNames.has(skill.name));
         
         // Merge saved skills with their original icons when available
-        const hydratedSkills = parsedSkills.map((skill: any) => {
+        const hydratedSkills = parsedSkills.map((skill: Skill) => {
           // Try to find the original icon for this skill
           const originalIcon = skillIconMap.get(skill.name);
           

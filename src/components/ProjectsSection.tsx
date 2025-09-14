@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Project, projects as defaultProjects } from "@/data/projects";
 import { ExternalLink, Github } from "lucide-react";
@@ -12,6 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { TabNavigation, TabItem } from "@/components/TabNavigation";
+import { EmptyState } from "@/components/EmptyState";
 
 // Custom hook for intersection observer
 const useIntersectionObserver = (options = {}) => {
@@ -60,6 +62,7 @@ export function ProjectsSection() {
   const [imagesLoaded, setImagesLoaded] = useState<{ [key: string]: boolean }>({});
   const { entries: visibleCards, observe } = useIntersectionObserver();
   const [projects, setProjects] = useState<Project[]>(defaultProjects);
+  const [activeTab, setActiveTab] = useState<string>('frontend');
 
   useEffect(() => {
     const savedProjects = localStorage.getItem('projects');
@@ -69,6 +72,30 @@ export function ProjectsSection() {
       localStorage.setItem('projects', JSON.stringify(defaultProjects));
     }
   }, []);
+
+  // Filter projects based on active tab
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project => project.category === activeTab);
+  }, [projects, activeTab]);
+
+  // Create tabs with project counts
+  const tabs: TabItem[] = useMemo(() => {
+    const frontendCount = projects.filter(p => p.category === 'frontend').length;
+    const wordpressCount = projects.filter(p => p.category === 'wordpress').length;
+    
+    return [
+      {
+        id: 'frontend',
+        label: 'Frontend Projects',
+        count: frontendCount
+      },
+      {
+        id: 'wordpress',
+        label: 'WordPress Projects',
+        count: wordpressCount
+      }
+    ];
+  }, [projects]);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLAnchorElement>, url: string) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -89,7 +116,7 @@ export function ProjectsSection() {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-muted/50 to-transparent" aria-hidden="true" />
       
       <div className="container max-w-screen-xl mx-auto px-4 md:px-8 relative">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="inline-flex items-center justify-center py-2 px-4 text-sm bg-primary/10 text-primary rounded-full mb-5 backdrop-blur-sm border border-primary/20 font-medium">
             My Work
           </span>
@@ -101,12 +128,23 @@ export function ProjectsSection() {
           </p>
         </div>
 
-        <div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          role="list"
-          aria-label="Projects grid"
-        >
-          {projects.map((project, index) => (
+        {/* Tab Navigation */}
+        <TabNavigation
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          className="mb-12"
+        />
+
+        {/* Projects Grid or Empty State */}
+        {filteredProjects.length > 0 ? (
+          <div 
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-0 duration-500"
+            role="list"
+            aria-label={`${activeTab} projects grid`}
+            key={activeTab} // Force re-render for animation
+          >
+            {filteredProjects.map((project, index) => (
             <div
               key={project.id}
               ref={(el) => observe(project.id.toString(), el)}
@@ -215,8 +253,19 @@ export function ProjectsSection() {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div 
+            className="animate-in fade-in-0 duration-500"
+            key={`empty-${activeTab}`} // Force re-render for animation
+          >
+            <EmptyState 
+              category={activeTab} 
+              className="mx-auto max-w-2xl"
+            />
+          </div>
+        )}
       </div>
     </section>
   );
