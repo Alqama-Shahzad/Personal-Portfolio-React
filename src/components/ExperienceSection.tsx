@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { safeStorage } from "@/lib/safeStorage";
 import { Briefcase, Code, Lightbulb, GraduationCap } from "lucide-react";
 import ConnectButton from "@/components/ConnectButton";
 import { Experience, experiences as defaultExperiences } from "@/data/experience";
@@ -27,9 +28,12 @@ export function ExperienceSection() {
     }
 
     // Load experiences from localStorage if available
-    const savedExperiences = localStorage.getItem('experiences');
-    if (savedExperiences) {
-      setExperiences(JSON.parse(savedExperiences));
+    const savedExperiences = safeStorage.getItem<Experience[]>('experiences', defaultExperiences);
+    setExperiences(savedExperiences);
+    
+    // Save experiences to localStorage if available
+    if (safeStorage.isAvailable()) {
+      safeStorage.setItem('experiences', savedExperiences);
     }
 
     return () => {

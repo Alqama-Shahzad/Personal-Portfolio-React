@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { safeStorage } from "@/lib/safeStorage";
 import { skills as defaultSkills, type Skill } from "@/data/skills";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
@@ -9,47 +10,46 @@ export function SkillsSection() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [skills, setSkills] = useState(defaultSkills);
-  
+
   // Load skills from localStorage if available
   useEffect(() => {
-    const savedSkills = localStorage.getItem('skills');
-    if (savedSkills) {
-      try {
-        // Parse the saved skills
-        const parsedSkills = JSON.parse(savedSkills);
-        
-        // Create a map of original skills by name for icon lookup
-        const skillIconMap = new Map(
-          defaultSkills.map(skill => [skill.name, skill.icon])
-        );
-        
-        // Check if we have any new default skills that aren't in saved skills
-        const savedSkillNames = new Set(parsedSkills.map((skill: Skill) => skill.name));
-        const newDefaultSkills = defaultSkills.filter(skill => !savedSkillNames.has(skill.name));
-        
-        // Merge saved skills with their original icons when available
-        const hydratedSkills = parsedSkills.map((skill: Skill) => {
-          // Try to find the original icon for this skill
-          const originalIcon = skillIconMap.get(skill.name);
-          
-          return {
-            ...skill,
-            // Use original icon if found, otherwise fall back to Code icon
-            icon: originalIcon || Code
-          };
-        });
-        
-        // Combine saved skills with any new default skills
-        setSkills([...hydratedSkills, ...newDefaultSkills]);
-      } catch (error) {
-        console.error("Error parsing saved skills:", error);
-      }
+    // Use safe localStorage to get skills, with defaultSkills as fallback
+    const savedSkills = safeStorage.getItem<Skill[]>('skills', defaultSkills);
+
+    // Create a map of original skills by name for icon lookup
+    const skillIconMap = new Map(
+      defaultSkills.map(skill => [skill.name, skill.icon])
+    );
+
+    // Check if we have any new default skills that aren't in saved skills
+    const savedSkillNames = new Set(savedSkills.map((skill: Skill) => skill.name));
+    const newDefaultSkills = defaultSkills.filter(skill => !savedSkillNames.has(skill.name));
+
+    // Merge saved skills with their original icons when available
+    const hydratedSkills = savedSkills.map((skill: Skill) => {
+      // Try to find the original icon for this skill
+      const originalIcon = skillIconMap.get(skill.name);
+
+      return {
+        ...skill,
+        // Use original icon if found, otherwise fall back to Code icon
+        icon: originalIcon || Code
+      };
+    });
+
+    // Combine saved skills with any new default skills
+    const finalSkills = [...hydratedSkills, ...newDefaultSkills];
+    setSkills(finalSkills);
+
+    // Save updated skills to localStorage if available
+    if (safeStorage.isAvailable()) {
+      safeStorage.setItem('skills', finalSkills);
     }
   }, []);
-  
+
   const categories = [...new Set(skills.map(skill => skill.category))];
-  
-  const filteredSkills = selectedCategory 
+
+  const filteredSkills = selectedCategory
     ? skills.filter(skill => skill.category === selectedCategory)
     : skills;
 
@@ -82,7 +82,7 @@ export function SkillsSection() {
     <section
       id="skills"
       className="relative py-20 md:py-32 overflow-hidden"
-    >      
+    >
       <div className="container max-w-6xl mx-auto px-4 md:px-8">
         <div className={cn(
           "text-center mb-16 opacity-0 transform translate-y-8 transition-all duration-700 ease-out",
@@ -104,8 +104,8 @@ export function SkillsSection() {
           "flex flex-wrap justify-center gap-3 mb-16 opacity-0 transform translate-y-8 transition-all duration-700 delay-200 ease-out",
           isVisible && "opacity-100 translate-y-0"
         )}>
-          <Button 
-            variant={selectedCategory === null ? "default" : "ghost"} 
+          <Button
+            variant={selectedCategory === null ? "default" : "ghost"}
             size="sm"
             onClick={() => setSelectedCategory(null)}
             className="text-sm min-w-[80px]"
@@ -113,9 +113,9 @@ export function SkillsSection() {
             All
           </Button>
           {categories.map(category => (
-            <Button 
-              key={category} 
-              variant={selectedCategory === category ? "default" : "ghost"} 
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "ghost"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
               className="text-sm capitalize min-w-[80px]"
@@ -131,7 +131,7 @@ export function SkillsSection() {
             // Calculate row index based on grid columns
             const rowIndex = Math.floor(index / 3); // Using 3 columns as base
             const Icon = skill.icon;
-            
+
             return (
               <div
                 key={skill.name}
@@ -166,7 +166,7 @@ export function SkillsSection() {
                   {/* Progress bar */}
                   <div className="relative pt-1">
                     <div className="h-1.5 w-full bg-border/50 rounded-full overflow-hidden">
-                      <div 
+                      <div
                         className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300 ease-out rounded-full origin-left scale-x-0 group-hover:scale-x-100"
                         style={{ width: `${skill.level}%` }}
                       />
@@ -178,7 +178,7 @@ export function SkillsSection() {
                 </div>
 
                 {/* Decorative corner accent */}
-                <div 
+                <div
                   className="absolute -bottom-0.5 -right-0.5 w-10 h-10 bg-primary/5 rounded-br-lg 
                     transition-all duration-200 opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100"
                 />

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { safeStorage } from "@/lib/safeStorage";
 import { Project, projects as defaultProjects } from "@/data/projects";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -65,11 +66,14 @@ export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<string>('frontend');
 
   useEffect(() => {
-    const savedProjects = localStorage.getItem('projects');
-    if (savedProjects) {
-      setProjects(JSON.parse(savedProjects));
-    } else {
-      localStorage.setItem('projects', JSON.stringify(defaultProjects));
+    // Use safe localStorage to get projects, with defaultProjects as fallback
+    const savedProjects = safeStorage.getItem<Project[]>('projects', defaultProjects);
+    setProjects(savedProjects);
+    
+    // Save default projects to localStorage if not already present
+    // This ensures localStorage is populated for future use
+    if (safeStorage.isAvailable()) {
+      safeStorage.setItem('projects', savedProjects);
     }
   }, []);
 
