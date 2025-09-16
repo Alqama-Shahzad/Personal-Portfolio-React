@@ -66,14 +66,13 @@ export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<string>('frontend');
 
   useEffect(() => {
-    // Use safe localStorage to get projects, with defaultProjects as fallback
-    const savedProjects = safeStorage.getItem<Project[]>('projects', defaultProjects);
-    setProjects(savedProjects);
+    // Always use defaultProjects as the source of truth
+    // This ensures projects are always displayed regardless of localStorage state
+    setProjects(defaultProjects);
     
-    // Save default projects to localStorage if not already present
-    // This ensures localStorage is populated for future use
+    // Optionally save to localStorage for future use, but don't depend on it
     if (safeStorage.isAvailable()) {
-      safeStorage.setItem('projects', savedProjects);
+      safeStorage.setItem('projects', defaultProjects);
     }
   }, []);
 
